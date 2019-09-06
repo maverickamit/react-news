@@ -40,6 +40,12 @@ function HomePage({ feedsStore }) {
     setRedirectToFeed(true);
   };
 
+  const deleteFeed = index => {
+    feedsStore.feeds.splice(index, 1);
+    feedsStore.setFeeds(feedsStore.feeds);
+    localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
+  };
+
   useEffect(() => {
     if (!initialized) {
       let rssFeeds = [];
@@ -121,7 +127,9 @@ function HomePage({ feedsStore }) {
               >
                 Open
               </Button>{" "}
-              <Button variant="primary">Delete</Button>
+              <Button variant="primary" onClick={deleteFeed.bind(this, i)}>
+                Delete
+              </Button>
             </Card.Body>
           </Card>
         );
