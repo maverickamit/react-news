@@ -24,8 +24,9 @@ const schema = yup.object({
 function HomePage({ feedsStore }) {
   const [initialized, setInitialized] = useState(false);
   const [redirectToFeed, setRedirectToFeed] = useState(false);
+  localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
 
-  const handleSubmit = async evt => {
+  const handleSubmit = async (evt) => {
     const isValid = await schema.validate(evt);
     if (!isValid) {
       return;
@@ -35,12 +36,12 @@ function HomePage({ feedsStore }) {
     localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
   };
 
-  const setSelectedFeed = url => {
+  const setSelectedFeed = (url) => {
     feedsStore.setSelectedFeed(url);
     setRedirectToFeed(true);
   };
 
-  const deleteFeed = index => {
+  const deleteFeed = (index) => {
     feedsStore.feeds.splice(index, 1);
     feedsStore.setFeeds(feedsStore.feeds);
     localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));

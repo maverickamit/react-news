@@ -14,7 +14,7 @@ function FeedPage({ feedsStore, location }) {
   const [listings, setListings] = useState([]);
   const [data, setData] = useState({});
 
-  const getListings = async url => {
+  const getListings = async (url) => {
     try {
       const response = await getFeedListing(url);
       setListings(response.data.items);
@@ -24,7 +24,7 @@ function FeedPage({ feedsStore, location }) {
     }
   };
 
-  const openLink = url => {
+  const openLink = (url) => {
     window.location.href = url;
   };
 
@@ -39,16 +39,22 @@ function FeedPage({ feedsStore, location }) {
 
   return (
     <div className="feed-page">
-      <h1 className="center title">
-        <img src={data.image} /> {data.title}
-      </h1>
+      <h1 className="center title">{data.title}</h1>
       {listings.map((l, i) => {
         return (
           <Card key={i}>
             <Card.Title className="card-title">{l.title}</Card.Title>
             <Card.Body>
-              <p>{l.description}</p>
-              <p>{l.content}</p>
+              <p>
+                {
+                  l.description
+                    .replace("<p>", "")
+                    .replace(/<img .*?>/g, "")
+                    .split(".")[0]
+                }
+                .
+              </p>
+              {/* <p>{l.content}</p> */}
               <Button variant="primary" onClick={openLink.bind(this, l.link)}>
                 Open
               </Button>{" "}
