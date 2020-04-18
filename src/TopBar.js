@@ -13,7 +13,7 @@ function TopBar({ location }) {
           <Nav.Link href="/" active={location.pathname == "/"}>
             Home
           </Nav.Link>
-          <Nav.Link href="/top" active={location.pathname == "/TopFeeds"}>
+          <Nav.Link href="/top" active={location.pathname == "/"}>
             Top
           </Nav.Link>
         </Nav>

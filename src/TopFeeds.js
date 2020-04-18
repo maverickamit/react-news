@@ -1,63 +1,135 @@
 import React, { useState, useEffect } from "react";
-import "./FeedPage.css";
+import "./HomePage.css";
 import { observer } from "mobx-react";
-import { withRouter } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import { Formik } from "formik";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import * as yup from "yup";
-import { getFeedListing } from "./requests";
+import { Redirect } from "react-router-dom";
 const querystring = require("querystring");
 
-function FeedPage({ feedsStore, location }) {
-  const [initialized, setInitialized] = useState(false);
-  const [url, setUrl] = useState("");
-  const [listings, setListings] = useState([]);
-  const [data, setData] = useState({});
+const schema = yup.object({
+  name: yup.string().required("URL is required"),
+  url: yup
+    .string()
+    .required("URL is required")
+    .matches(
+      /(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/,
+      "Invalid URL"
+    ),
+});
 
-  const getListings = async (url) => {
-    try {
-      const response = await getFeedListing(url);
-      setListings(response.data.items);
-      setData(response.data.feed);
-    } catch (ex) {
-      console.log(ex);
+function HomePage({ feedsStore }) {
+  const [initialized, setInitialized] = useState(false);
+  const [redirectToFeed, setRedirectToFeed] = useState(false);
+
+  const handleSubmit = async (evt) => {
+    const isValid = await schema.validate(evt);
+    if (!isValid) {
+      return;
     }
+    feedsStore.feeds.push(evt);
+    feedsStore.setFeeds(feedsStore.feeds);
+    localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
   };
 
-  const openLink = (url) => {
-    window.location.href = url;
+  const setSelectedFeed = (url) => {
+    feedsStore.setSelectedFeed(url);
+    setRedirectToFeed(true);
+  };
+
+  const deleteFeed = (index) => {
+    feedsStore.feeds.splice(index, 1);
+    feedsStore.setFeeds(feedsStore.feeds);
+    localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
   };
 
   useEffect(() => {
     if (!initialized) {
-      const url = querystring.decode(location.search)["?url"];
-      setUrl(url);
-      getListings(url);
+      let rssFeeds = [];
+      try {
+        rssFeeds = JSON.parse(localStorage.getItem("feeds"));
+        if (Array.isArray(rssFeeds)) {
+          feedsStore.setFeeds(rssFeeds);
+        }
+      } catch (ex) {}
       setInitialized(true);
     }
   });
 
+  if (redirectToFeed) {
+    return (
+      <Redirect to={`/feed?${querystring.encode({ url: feedsStore.feed })}`} />
+    );
+  }
+
   return (
-    <div className="feed-page">
-      <h1 className="center title">{data.title}</h1>
-      {listings.map((l, i) => {
+    <div className="home-page">
+      <h1 className="center">RSS Feeds</h1>
+      <Formik validationSchema={schema} onSubmit={handleSubmit}>
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
+          touched,
+          isInvalid,
+          errors,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={values.name || ""}
+                  onChange={handleChange}
+                  isInvalid={touched.name && errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="12" controlId="url">
+                <Form.Label>URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="url"
+                  placeholder="URL"
+                  value={values.url || ""}
+                  onChange={handleChange}
+                  isInvalid={touched.url && errors.url}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {errors.url}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form.Row>
+            <Button type="submit">Add</Button>
+          </Form>
+        )}
+      </Formik>
+      <br />
+      {feedsStore.feeds.map((f, i) => {
         return (
           <Card key={i}>
-            <Card.Title className="card-title">{l.title}</Card.Title>
+            <Card.Title className="card-title">{f.name}</Card.Title>
             <Card.Body>
-              <p>
-                {
-                  l.description
-                    .replace("<p>", "")
-                    .replace(/<img .*?>/g, "")
-                    .split(".")[0]
-                }
-                .
-              </p>
-              {/* <p>{l.content}</p> */}
-              <Button variant="primary" onClick={openLink.bind(this, l.link)}>
+              <p>{f.url}</p>
+              <Button
+                variant="primary"
+                onClick={setSelectedFeed.bind(this, f.url)}
+              >
                 Open
               </Button>{" "}
+              <Button variant="primary" onClick={deleteFeed.bind(this, i)}>
+                Delete
+              </Button>
             </Card.Body>
           </Card>
         );
@@ -65,4 +137,4 @@ function FeedPage({ feedsStore, location }) {
     </div>
   );
 }
-export default withRouter(observer(FeedPage));
+export default observer(HomePage);
