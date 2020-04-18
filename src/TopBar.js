@@ -13,6 +13,9 @@ function TopBar({ location }) {
           <Nav.Link href="/" active={location.pathname == "/"}>
             Home
           </Nav.Link>
+          <Nav.Link href="/top" active={location.pathname == "/TopFeeds"}>
+            Top
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
