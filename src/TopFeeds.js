@@ -1,140 +1,53 @@
 import React, { useState, useEffect } from "react";
-import "./HomePage.css";
 import { observer } from "mobx-react";
+import { withRouter } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import { Formik } from "formik";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import * as yup from "yup";
-import { Redirect } from "react-router-dom";
-const querystring = require("querystring");
+import { getFeedListing } from "./requests";
 
-const schema = yup.object({
-  name: yup.string().required("URL is required"),
-  url: yup
-    .string()
-    .required("URL is required")
-    .matches(
-      /(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/,
-      "Invalid URL"
-    ),
-});
+function TopFeeds() {
+  const feeds = [
+    { name: "ABC News", url: "https://abcnews.go.com/abcnews/topstories" },
+    { name: "BBC News", url: "http://feeds.bbci.co.uk/news/rss.xml" },
+    { name: "The Intercept", url: "https://theintercept.com/feed/?lang=en" },
+    { name: "Al Jazeera", url: "http://www.aljazeera.com/xml/rss/all.xml" },
+    { name: "UPI News", url: "http://rss.upi.com/news/top_news.rss" },
+    { name: "Newsday", url: "http://www.newsday.com/cmlink/1.1284874" },
+  ];
+  const [allListings, setListings] = useState([]);
+  const [data, setData] = useState({});
 
-function HomePage({ feedsStore }) {
-  const [initialized, setInitialized] = useState(false);
-  const [redirectToFeed, setRedirectToFeed] = useState(false);
-
-  const handleSubmit = async (evt) => {
-    const isValid = await schema.validate(evt);
-    if (!isValid) {
-      return;
-    }
-    feedsStore.feeds.push(evt);
-    feedsStore.setFeeds(feedsStore.feeds);
-    localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
-  };
-
-  const setSelectedFeed = (url) => {
-    feedsStore.setSelectedFeed(url);
-    setRedirectToFeed(true);
-  };
-
-  const deleteFeed = (index) => {
-    feedsStore.feeds.splice(index, 1);
-    feedsStore.setFeeds(feedsStore.feeds);
-    localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
-  };
-
-  useEffect(() => {
-    if (!initialized) {
-      let rssFeeds = [];
-      try {
-        rssFeeds = JSON.parse(localStorage.getItem("feeds"));
-        if (Array.isArray(rssFeeds)) {
-          feedsStore.setFeeds(rssFeeds);
-        }
-      } catch (ex) {}
-      setInitialized(true);
-    }
+  const urls = [];
+  feeds.map((feed) => {
+    urls.push(feed.url);
   });
+  console.log(urls);
+  var Feed = require("rss-to-json");
+  const list = [];
 
-  if (redirectToFeed) {
-    return (
-      <Redirect to={`/feed?${querystring.encode({ url: feedsStore.feed })}`} />
-    );
-  }
+  const getListings = async (url) => {
+    try {
+      Feed.load(
+        "https://cors-anywhere.herokuapp.com/theintercept.com/feed/?lang=en",
+        function (err, rss) {
+          list.push(rss.items);
+        }
+      );
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+  urls.map((url) => {
+    getListings(url);
+    console.log(list);
+  });
+  //   getListings("https://abcnews.go.com/abcnews/topstories");
 
+  console.log("End of process");
   return (
-    <div className="home-page">
-      <h1 className="center">RSS Feeds</h1>
-      <Formik validationSchema={schema} onSubmit={handleSubmit}>
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          values,
-          touched,
-          isInvalid,
-          errors,
-        }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Form.Row>
-              <Form.Group as={Col} md="12" controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={values.name || ""}
-                  onChange={handleChange}
-                  isInvalid={touched.name && errors.name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="12" controlId="url">
-                <Form.Label>URL</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="url"
-                  placeholder="URL"
-                  value={values.url || ""}
-                  onChange={handleChange}
-                  isInvalid={touched.url && errors.url}
-                />
-
-                <Form.Control.Feedback type="invalid">
-                  {errors.url}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Button type="submit">Add</Button>
-          </Form>
-        )}
-      </Formik>
-      <br />
-      {feedsStore.feeds.map((f, i) => {
-        return (
-          <Card key={i}>
-            <Card.Title className="card-title">{f.name}</Card.Title>
-            <Card.Body>
-              <p>{f.url}</p>
-              <Button
-                variant="primary"
-                onClick={setSelectedFeed.bind(this, f.url)}
-              >
-                Open
-              </Button>{" "}
-              <Button variant="primary" onClick={deleteFeed.bind(this, i)}>
-                Delete
-              </Button>
-            </Card.Body>
-          </Card>
-        );
-      })}
+    <div className="feed-page">
+      <p>Hello World!</p>
     </div>
   );
 }
-export default observer(HomePage);
+export default withRouter(observer(TopFeeds));
