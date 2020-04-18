@@ -24,7 +24,6 @@ const schema = yup.object({
 function HomePage({ feedsStore }) {
   const [initialized, setInitialized] = useState(false);
   const [redirectToFeed, setRedirectToFeed] = useState(false);
-  localStorage.setItem("feeds", JSON.stringify(feedsStore.feeds));
 
   const handleSubmit = async (evt) => {
     const isValid = await schema.validate(evt);
