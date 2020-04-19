@@ -36,6 +36,15 @@ function TopFeeds({ feedsStore }) {
     if (initialized === 0) {
       setInitialized(initialized + 1);
       console.log(allListings);
+      let flatList = allListings.flat();
+
+      console.log(
+        flatList.sort((item1, item2) => {
+          var d1 = item1.created;
+          var d2 = item2.created;
+          return d2 - d1;
+        })
+      );
     }
   }, 3000);
 
