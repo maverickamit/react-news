@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
+import "./FeedPage.css";
 import { observer } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { getFeedListing } from "./requests";
+const axios = require("axios");
 
-function TopFeeds() {
+function TopFeeds({ feedsStore }) {
   const feeds = [
-    { name: "ABC News", url: "https://abcnews.go.com/abcnews/topstories" },
-    { name: "BBC News", url: "http://feeds.bbci.co.uk/news/rss.xml" },
-    { name: "The Intercept", url: "https://theintercept.com/feed/?lang=en" },
-    { name: "Al Jazeera", url: "http://www.aljazeera.com/xml/rss/all.xml" },
-    { name: "UPI News", url: "http://rss.upi.com/news/top_news.rss" },
-    { name: "Newsday", url: "http://www.newsday.com/cmlink/1.1284874" },
+    { name: "ABC News", url: "abcnews.go.com/abcnews/topstories" },
+    { name: "BBC News", url: "feeds.bbci.co.uk/news/rss.xml" },
+    { name: "The Intercept", url: "theintercept.com/feed/?lang=en" },
+    { name: "Al Jazeera", url: "www.aljazeera.com/xml/rss/all.xml" },
+    { name: "UPI News", url: "rss.upi.com/news/top_news.rss" },
+    { name: "Newsday", url: "www.newsday.com/cmlink/1.1284874" },
   ];
+  const [initialized, setInitialized] = useState(0);
   const [allListings, setListings] = useState([]);
   const [data, setData] = useState({});
 
@@ -21,33 +24,51 @@ function TopFeeds() {
   feeds.map((feed) => {
     urls.push(feed.url);
   });
-  console.log(urls);
   var Feed = require("rss-to-json");
   const list = [];
-
   const getListings = async (url) => {
-    try {
-      Feed.load(
-        "https://cors-anywhere.herokuapp.com/theintercept.com/feed/?lang=en",
-        function (err, rss) {
-          list.push(rss.items);
-        }
-      );
-    } catch (ex) {
-      console.log(ex);
-    }
+    await Feed.load("http://localhost:5000/" + url, function (err, rss) {
+      list.push(rss.items);
+      setListings(list);
+    });
   };
-  urls.map((url) => {
-    getListings(url);
-    console.log(list);
-  });
-  //   getListings("https://abcnews.go.com/abcnews/topstories");
+  const timer = setTimeout(() => {
+    if (initialized === 0) {
+      setInitialized(initialized + 1);
+    }
+  }, 3000);
 
-  console.log("End of process");
+  useEffect(() => {
+    if (initialized != 1) {
+      for (let i = 0; i < urls.length; i++) {
+        getListings(urls[i]);
+      }
+    }
+  }, [initialized]);
+
+  {
+    allListings.map((l, i) => {
+      return (
+        <Card key={i}>
+          <p>{l[0].title}</p>
+        </Card>
+      );
+    });
+  }
+
   return (
     <div className="feed-page">
-      <p>Hello World!</p>
+      {allListings.map((l, i) => {
+        return l.map((li, i) => {
+          return (
+            <Card key={i}>
+              <p>{li.title}</p>
+            </Card>
+          );
+        });
+      })}
     </div>
   );
 }
+
 export default withRouter(observer(TopFeeds));

@@ -10,23 +10,29 @@ class FeedsStore {
     { name: "Newsday", url: "http://www.newsday.com/cmlink/1.1284874" },
   ];
   feed = "";
-  
+
+  allfeeds = [];
 
   setFeeds(feeds) {
     this.feeds = feeds;
-    
   }
 
   setSelectedFeed(feed) {
     this.feed = feed;
+  }
+
+  setallFeeds(allfeeds) {
+    this.allfeeds = allfeeds;
   }
 }
 
 FeedsStore = decorate(FeedsStore, {
   feeds: observable,
   feed: observable,
+  allfeeds: observable,
   setFeeds: action,
   setSelectedFeed: action,
+  setallFeeds: action,
 });
 
 export { FeedsStore };

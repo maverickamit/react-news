@@ -14,7 +14,6 @@ function FeedPage({ feedsStore, location }) {
   const [listings, setListings] = useState([]);
   const [data, setData] = useState({});
 
-  
   const getListings = async (url) => {
     try {
       const response = await getFeedListing(url);
