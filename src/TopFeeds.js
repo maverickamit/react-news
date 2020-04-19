@@ -35,6 +35,7 @@ function TopFeeds({ feedsStore }) {
   const timer = setTimeout(() => {
     if (initialized === 0) {
       setInitialized(initialized + 1);
+      console.log(allListings);
     }
   }, 3000);
 
@@ -46,23 +47,33 @@ function TopFeeds({ feedsStore }) {
     }
   }, [initialized]);
 
-  {
-    allListings.map((l, i) => {
-      return (
-        <Card key={i}>
-          <p>{l[0].title}</p>
-        </Card>
-      );
-    });
-  }
+  const openLink = (url) => {
+    window.location.href = url;
+  };
 
   return (
     <div className="feed-page">
-      {allListings.map((l, i) => {
+      {allListings.map((l, j) => {
         return l.map((li, i) => {
           return (
-            <Card key={i}>
-              <p>{li.title}</p>
+            <Card key={i + j}>
+              <Card.Title className="card-title">{li.title}</Card.Title>
+              <Card.Body>
+                <p>
+                  {li.description
+                    .replace("<p>", "")
+                    .replace(/<img .*?>/g, "")
+                    .split(".")[0] + "..."}
+                </p>
+                <p>{li.pubDate}</p>
+                {/* <p>{l.content}</p> */}
+                <Button
+                  variant="primary"
+                  onClick={openLink.bind(this, li.link)}
+                >
+                  Open
+                </Button>{" "}
+              </Card.Body>
             </Card>
           );
         });
