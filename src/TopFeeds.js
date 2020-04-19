@@ -29,14 +29,15 @@ function TopFeeds({ feedsStore }) {
   const getListings = async (url) => {
     await Feed.load("http://localhost:5000/" + url, function (err, rss) {
       list.push(rss.items);
-      setListings(list);
+      setListings(list.flat());
     });
   };
+  const flatList = [];
   const timer = setTimeout(() => {
     if (initialized === 0) {
       setInitialized(initialized + 1);
       console.log(allListings);
-      let flatList = allListings.flat();
+      const flatList = allListings.flat();
 
       console.log(
         flatList.sort((item1, item2) => {
@@ -60,12 +61,20 @@ function TopFeeds({ feedsStore }) {
     window.location.href = url;
   };
 
+  // if (!flatList) {
+  //   return <h1>Loading</h1>;
+  // } else {
   return (
     <div className="feed-page">
-      {allListings.map((l, j) => {
-        return l.map((li, i) => {
+      {allListings
+        .sort((item1, item2) => {
+          var d1 = item1.created;
+          var d2 = item2.created;
+          return d2 - d1;
+        })
+        .map((li, i) => {
           return (
-            <Card key={i + j}>
+            <Card key={i}>
               <Card.Title className="card-title">{li.title}</Card.Title>
               <Card.Body>
                 <p>
@@ -85,8 +94,7 @@ function TopFeeds({ feedsStore }) {
               </Card.Body>
             </Card>
           );
-        });
-      })}
+        })}
     </div>
   );
 }
