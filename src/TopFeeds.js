@@ -16,7 +16,7 @@ function TopFeeds({ feedsStore }) {
     { name: "UPI News", url: "rss.upi.com/news/top_news.rss" },
     { name: "Newsday", url: "www.newsday.com/cmlink/1.1284874" },
   ];
-  const [initialized, setInitialized] = useState(0);
+  const [initialized, setInitialized] = useState(false);
   const [allListings, setListings] = useState([]);
   const [data, setData] = useState({});
 
@@ -26,44 +26,31 @@ function TopFeeds({ feedsStore }) {
   });
   var Feed = require("rss-to-json");
   const list = [];
-  const getListings = async (url) => {
+  const getListing = async (url) => {
     await Feed.load("http://localhost:5000/" + url, function (err, rss) {
       list.push(rss.items);
       setListings(list.flat());
     });
   };
-  const flatList = [];
-  const timer = setTimeout(() => {
-    if (initialized === 0) {
-      setInitialized(initialized + 1);
-      console.log(allListings);
-      const flatList = allListings.flat();
 
-      console.log(
-        flatList.sort((item1, item2) => {
-          var d1 = item1.created;
-          var d2 = item2.created;
-          return d2 - d1;
-        })
-      );
-    }
-  }, 3000);
+  const getListings = (urls) => {
+    urls.map((url) => {
+      getListing(url);
+    });
+  };
 
   useEffect(() => {
-    if (initialized != 1) {
-      for (let i = 0; i < urls.length; i++) {
-        getListings(urls[i]);
-      }
+    if (!initialized) {
+      getListings(urls);
+      console.log("hi");
     }
+    setInitialized(true);
   }, [initialized]);
 
   const openLink = (url) => {
     window.location.href = url;
   };
 
-  // if (!flatList) {
-  //   return <h1>Loading</h1>;
-  // } else {
   return (
     <div className="feed-page">
       {allListings
