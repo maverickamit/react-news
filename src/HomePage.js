@@ -78,40 +78,41 @@ function HomePage({ feedsStore }) {
           isInvalid,
           errors,
         }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Form.Row>
-              <Form.Group as={Col} md="12" controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={values.name || ""}
-                  onChange={handleChange}
-                  isInvalid={touched.name && errors.name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="12" controlId="url">
-                <Form.Label>URL</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="url"
-                  placeholder="URL"
-                  value={values.url || ""}
-                  onChange={handleChange}
-                  isInvalid={touched.url && errors.url}
-                />
+          <div>
+            <h5>Add a RSS feed</h5>
+            <Form noValidate onSubmit={handleSubmit}>
+              <Form.Row>
+                <Form.Group as={Col} md="12" controlId="name">
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={values.name || ""}
+                    onChange={handleChange}
+                    isInvalid={touched.name && errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md="12" controlId="url">
+                  <Form.Control
+                    type="text"
+                    name="url"
+                    placeholder="URL"
+                    value={values.url || ""}
+                    onChange={handleChange}
+                    isInvalid={touched.url && errors.url}
+                  />
 
-                <Form.Control.Feedback type="invalid">
-                  {errors.url}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Button type="submit">Add</Button>
-          </Form>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.url}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Form.Row>
+              <Button type="submit">Add</Button>
+            </Form>
+          </div>
         )}
       </Formik>
       <br />
@@ -120,7 +121,7 @@ function HomePage({ feedsStore }) {
           <Card key={i}>
             <Card.Title className="card-title">{f.name}</Card.Title>
             <Card.Body>
-              <p>{f.url}</p>
+              <Card.Text>{f.url}</Card.Text>
               <Button
                 variant="primary"
                 onClick={setSelectedFeed.bind(this, f.url)}

@@ -17,7 +17,7 @@ function App({ feedsStore }) {
         <Route
           path="/"
           exact
-          component={(props) => <HomePage {...props} feedsStore={feedsStore} />}
+          component={(props) => <TopFeeds {...props} feedsStore={feedsStore} />}
         />
         <Route
           path="/feed"
@@ -25,9 +25,9 @@ function App({ feedsStore }) {
           component={(props) => <FeedPage {...props} feedsStore={feedsStore} />}
         />
         <Route
-          path="/top"
+          path="/settings"
           exact
-          component={(props) => <TopFeeds {...props} feedsStore={feedsStore} />}
+          component={(props) => <HomePage {...props} feedsStore={feedsStore} />}
         />
       </Router>
     </div>

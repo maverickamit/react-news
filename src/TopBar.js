@@ -6,15 +6,15 @@ import { withRouter } from "react-router-dom";
 function TopBar({ location }) {
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
-      <Navbar.Brand href="#home">RSS App</Navbar.Brand>
+      <Navbar.Brand href="#home">News</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/" active={location.pathname == "/"}>
             Home
           </Nav.Link>
-          <Nav.Link href="/top" active={location.pathname == "/"}>
-            Top
+          <Nav.Link href="/settings" active={location.pathname == "/"}>
+            Settings
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

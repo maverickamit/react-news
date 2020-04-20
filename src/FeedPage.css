@@ -7,3 +7,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.card-title {
+  font-weight: bold;
+}

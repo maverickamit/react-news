@@ -43,18 +43,14 @@ function FeedPage({ feedsStore, location }) {
       {listings.map((l, i) => {
         return (
           <Card key={i}>
-            <Card.Title className="card-title">{l.title}</Card.Title>
+            <Card.Header className="card-title">{l.title}</Card.Header>
             <Card.Body>
               <p>
-                {
-                  l.description
-                    .replace("<p>", "")
-                    .replace(/<img .*?>/g, "")
-                    .split(".")[0]
-                }
-                .
+                {l.description
+                  .replace("<p>", "")
+                  .replace(/<img .*?>/g, "")
+                  .split(".")[0] + "..."}
               </p>
-              {/* <p>{l.content}</p> */}
               <Button variant="primary" onClick={openLink.bind(this, l.link)}>
                 Open
               </Button>{" "}

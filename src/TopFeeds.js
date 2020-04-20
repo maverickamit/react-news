@@ -39,25 +39,24 @@ function TopFeeds({ feedsStore }) {
     });
   };
 
-  const eminem = async () => {
+  const getListings = async () => {
     await urls.map((url) => {
       getListing(url);
       list = [];
-      setListings(list);
       console.log("I am updating");
     });
   };
 
-  const getListings = (urls) => {
+  const updateListings = (urls) => {
     setInterval(() => {
-      eminem();
+      getListings();
     }, 10000);
   };
 
   useEffect(() => {
     if (!initialized) {
-      eminem();
-      getListings(urls);
+      getListings();
+      updateListings(urls);
     }
     setInitialized(true);
   }, [initialized]);
@@ -77,14 +76,15 @@ function TopFeeds({ feedsStore }) {
         .map((li, i) => {
           return (
             <Card key={i}>
-              <Card.Title className="card-title">{li.title}</Card.Title>
+              <Card.Header className="card-title">{li.title}</Card.Header>
+
               <Card.Body>
-                <p>
+                <Card.Text>
                   {li.description
                     .replace("<p>", "")
                     .replace(/<img .*?>/g, "")
                     .split(".")[0] + "..."}
-                </p>
+                </Card.Text>
                 <p>{li.pubDate}</p>
                 {/* <p>{l.content}</p> */}
                 <Button
