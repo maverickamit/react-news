@@ -28,8 +28,13 @@ function TopFeeds({ feedsStore }) {
   const list = [];
   const getListing = async (url) => {
     await Feed.load("http://localhost:5000/" + url, function (err, rss) {
-      list.push(rss.items);
-      setListings(list.flat());
+      try {
+        list.push(rss.items);
+        setListings(list.flat());
+        console.log("success fetching");
+      } catch (err) {
+        console.log("error");
+      }
     });
   };
 
@@ -42,7 +47,6 @@ function TopFeeds({ feedsStore }) {
   useEffect(() => {
     if (!initialized) {
       getListings(urls);
-      console.log("hi");
     }
     setInitialized(true);
   }, [initialized]);
