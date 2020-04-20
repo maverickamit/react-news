@@ -18,6 +18,7 @@ function TopFeeds({ feedsStore }) {
   ];
   const [initialized, setInitialized] = useState(false);
   const [allListings, setListings] = useState([]);
+
   const [data, setData] = useState({});
 
   const urls = [];
@@ -25,7 +26,7 @@ function TopFeeds({ feedsStore }) {
     urls.push(feed.url);
   });
   var Feed = require("rss-to-json");
-  const list = [];
+  let list = [];
   const getListing = async (url) => {
     await Feed.load("http://localhost:5000/" + url, function (err, rss) {
       try {
@@ -38,14 +39,24 @@ function TopFeeds({ feedsStore }) {
     });
   };
 
-  const getListings = (urls) => {
-    urls.map((url) => {
+  const eminem = async () => {
+    await urls.map((url) => {
       getListing(url);
+      list = [];
+      setListings(list);
+      console.log("I am updating");
     });
+  };
+
+  const getListings = (urls) => {
+    setInterval(() => {
+      eminem();
+    }, 10000);
   };
 
   useEffect(() => {
     if (!initialized) {
+      eminem();
       getListings(urls);
     }
     setInitialized(true);
