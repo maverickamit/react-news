@@ -18,6 +18,7 @@ function FeedPage({ feedsStore, location }) {
     try {
       const response = await getFeedListing(url);
       setListings(response.data.items);
+      
       setData(response.data.feed);
     } catch (ex) {
       console.log(ex);

@@ -22,18 +22,19 @@ function TopFeeds({ feedsStore }) {
 
   const [data, setData] = useState({});
 
-  const urls = [];
-  feeds.map((feed) => {
-    urls.push(feed.url);
-  });
+  // const urls = [];
+  // feeds.map((feed) => {
+  //   urls.push(feed.url);
+  // });
   var Feed = require("rss-to-json");
   let list = [];
-  const getListing = async (url) => {
-    await Feed.load("http://localhost:5000/" + url, function (err, rss) {
+  const getListing = async (feed) => {
+    await Feed.load("http://localhost:5000/" + feed.url, function (err, rss) {
       try {
+        rss.items.map((item) => (item.sourceName = feed.name));
         list.push(rss.items);
         setListings(list.flat());
-        console.log("success fetching");
+        console.log(rss.items);
       } catch (err) {
         console.log("error");
       }
@@ -41,14 +42,14 @@ function TopFeeds({ feedsStore }) {
   };
 
   const getListings = async () => {
-    await urls.map((url) => {
-      getListing(url);
+    feeds.map((feed) => {
+      getListing(feed);
       list = [];
       console.log("I am updating");
     });
   };
 
-  const updateListings = (urls) => {
+  const updateListings = () => {
     setInterval(() => {
       getListings();
     }, 10000);
@@ -57,7 +58,7 @@ function TopFeeds({ feedsStore }) {
   useEffect(() => {
     if (!initialized) {
       getListings();
-      updateListings(urls);
+      updateListings();
     }
     setInitialized(true);
   }, [initialized]);
@@ -87,7 +88,10 @@ function TopFeeds({ feedsStore }) {
                     .split(".")[0] + "..."}
                 </Card.Text>
                 <Card.Text>
-                  <ReactTimeAgo date={li.pubDate} />
+                  <span>
+                    <ReactTimeAgo date={li.pubDate} />
+                    <span>{`  from ${li.sourceName}`}</span>
+                  </span>
                 </Card.Text>
                 {/* <p>{l.content}</p> */}
                 <Button

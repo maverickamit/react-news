@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 function TopBar({ location }) {
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
-      <Navbar.Brand href="#home">News</Navbar.Brand>
+      <Navbar.Brand href="/">News</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
