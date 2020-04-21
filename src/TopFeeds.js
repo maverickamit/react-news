@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
+import ReactTimeAgo from "react-time-ago";
 import "./FeedPage.css";
 import { observer } from "mobx-react";
 import { withRouter } from "react-router-dom";
@@ -85,7 +86,9 @@ function TopFeeds({ feedsStore }) {
                     .replace(/<img .*?>/g, "")
                     .split(".")[0] + "..."}
                 </Card.Text>
-                <p>{li.pubDate}</p>
+                <Card.Text>
+                  <ReactTimeAgo date={li.pubDate} />
+                </Card.Text>
                 {/* <p>{l.content}</p> */}
                 <Button
                   variant="primary"
