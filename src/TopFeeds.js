@@ -7,41 +7,65 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 // import { getFeedListing } from "./requests";
 var Feed = require("rss-to-json");
+var striptags = require("striptags");
+var he = require("he");
 
 function TopFeeds({ feedsStore }) {
   const feeds = [
-    "https://abcnews.go.com/abcnews/topstories",
-    "http://feeds.bbci.co.uk/news/rss.xml",
-    "https://theintercept.com/feed/?lang=en",
-    "http://www.aljazeera.com/xml/rss/all.xml",
-    "http://rss.upi.com/news/top_news.rss",
-    "http://www.newsday.com/cmlink/1.1284874",
-    "http://www.ibtimes.com/rss",
-    "http://rss.nytimes.com/services/xml/rss/nyt/World.xml",
-    "http://rss.nytimes.com/services/xml/rss/nyt/US.xml",
-    "http://feeds.feedburner.com/NewshourHeadlines?format=xml",
-    "http://www.npr.org/rss/rss.php?id=1001",
-    "http://feeds.bbci.co.uk/news/rss.xml",
-    "http://www.tmz.com/category/politix/rss.xml",
-    "http://nypost.com/news/feed/",
-    "http://feeds.reuters.com/Reuters/domesticNews",
-    "http://feeds.reuters.com/Reuters/worldNews",
-    "https://www.theguardian.com/world/rss",
-    "https://www.theguardian.com/us-news/rss",
-    "http://feeds.abcnews.com/abcnews/topstories",
-    "http://feeds.foxnews.com/foxnews/latest",
-    "http://feeds2.feedburner.com/time/topstories",
-    "http://feeds.marketwatch.com/marketwatch/topstories/",
-    "https://www.dailymail.co.uk/ushome/index.rss",
-    "https://www.dailymail.co.uk/news/index.rss",
-    "http://www.espn.com/espn/rss/news",
-    "https://www.newyorker.com/feed/news",
-    "https://www.thesun.co.uk/feed/",
-    "https://thehill.com/rss/syndicator/19109",
-    "https://thehill.com/rss/syndicator/19110",
-    "https://www.pbs.org/newshour/feeds/rss/headlines",
-    "https://www.washingtonexaminer.com/tag/news.rss",
-    "https://www.cbsnews.com/latest/rss/main",
+    "https://null-byte.wonderhowto.com/rss.xml",
+    "https://feeds.feedburner.com/TheHackersNews",
+    "http://feeds.feedburner.com/eset/blog/",
+    "https://www.phoronix.com/rss.php",
+    "https://www.anandtech.com/rss/",
+    "https://wccftech.com/feed/",
+    "https://www.techworm.net/feed",
+    "https://krebsonsecurity.com/feed/",
+    "https://www.washingtonexaminer.com/tag/technology.rss",
+    "https://thewirecutter.com/feed/",
+    "https://www.theinquirer.net/feeds/rss",
+    "https://risky.biz/rss.xml",
+    "https://cxsecurity.com/wlb/rss/exploit/",
+    "http://seclists.org/rss/fulldisclosure.rss",
+    "http://feeds.feedburner.com/securityweekly/",
+    "https://www.deepdotweb.com/feed/",
+    "http://feeds.macrumors.com/MacRumors-All",
+    "https://9to5mac.com/feed/",
+    "https://feeds.feedburner.com/neowin-main",
+    "https://securelist.com/feed/",
+    "https://www.xda-developers.com/feed/",
+    "https://www.eff.org/rss/updates.xml",
+    "https://www.onmsft.com/feed",
+    "https://fossbytes.com/feed/",
+    "https://www.bleepingcomputer.com/feed/",
+    "https://www.ghacks.net/feed/",
+    "http://feeds.feedburner.com/TheHackersNews",
+    "https://nakedsecurity.sophos.com/feed/",
+    "http://www.zdnet.com/blog/security/rss.xml",
+    "http://securityaffairs.co/wordpress/feed",
+    "https://www.darkreading.com/rss_simple.asp",
+    "https://www.extremetech.com/computing/feed",
+    "http://feeds.twit.tv/brickhouse_video_hd.xml",
+    "https://www.welivesecurity.com/feed/",
+    "https://www.techrepublic.com/rssfeeds/articles/",
+    "http://feeds.feedburner.com/TechCrunch/",
+    "http://www.computerworld.com/news/index.rss",
+    "https://www.extremetech.com/feed",
+    "http://www.techradar.com/rss",
+    "https://readwrite.com/feed/",
+    "https://www.theguardian.com/us/technology/rss",
+    "https://www.linuxinsider.com/perl/syndication/rssfull.pl",
+    "http://lxer.com/module/newswire/headlines.rss",
+    "https://feeds.feedburner.com/CoinDesk",
+    "https://cointelegraph.com/rss",
+    "https://www.theverge.com/rss/index.xml",
+    "https://www.theregister.co.uk/headlines.atom",
+    "https://threatpost.com/feed/",
+    "http://feeds.arstechnica.com/arstechnica/index/",
+    "http://feeds.reuters.com/reuters/technologyNews",
+    "https://www.anandtech.com/rss/",
+    "https://www.guru3d.com/news_rss",
+    "http://rss.slashdot.org/Slashdot/slashdotMain",
+    "https://feeds.feedburner.com/Torrentfreak",
   ];
   const [initialized, setInitialized] = useState(false);
   const [allListings, setListings] = useState([]);
@@ -111,10 +135,9 @@ function TopFeeds({ feedsStore }) {
 
                 <Card.Body>
                   <Card.Text>
-                    {li.description
-                      .replace("<p>", "")
-                      .replace(/<img .*?>/g, "")
-                      .substring(0, 150) + "..."}
+                    {he.decode(
+                      striptags(li.description).substring(0, 150) + "..."
+                    )}
                   </Card.Text>
                   <Card.Text>
                     <span>
