@@ -20,12 +20,6 @@ function TopFeeds({ feedsStore }) {
   const [initialized, setInitialized] = useState(false);
   const [allListings, setListings] = useState([]);
 
-  const [data, setData] = useState({});
-
-  // const urls = [];
-  // feeds.map((feed) => {
-  //   urls.push(feed.url);
-  // });
   var Feed = require("rss-to-json");
   let list = [];
   const getListing = async (feed) => {
@@ -52,7 +46,7 @@ function TopFeeds({ feedsStore }) {
   const updateListings = () => {
     setInterval(() => {
       getListings();
-    }, 10000);
+    }, 100000);
   };
 
   useEffect(() => {
@@ -66,6 +60,13 @@ function TopFeeds({ feedsStore }) {
   const openLink = (url) => {
     window.location.href = url;
   };
+  if (allListings.length === 0) {
+    return (
+      <div className="feed-page">
+        <h2>Loading!</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="feed-page">
@@ -85,7 +86,7 @@ function TopFeeds({ feedsStore }) {
                   {li.description
                     .replace("<p>", "")
                     .replace(/<img .*?>/g, "")
-                    .split(".")[0] + "..."}
+                    .substring(0, 150) + "..."}
                 </Card.Text>
                 <Card.Text>
                   <span>
