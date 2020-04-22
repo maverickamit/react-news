@@ -90,7 +90,7 @@ function TopFeeds({ feedsStore }) {
   }, [initialized]);
 
   const openLink = (url) => {
-    window.location.href = url;
+    window.open(url);
   };
 
   if (allListings.length === 0) {
