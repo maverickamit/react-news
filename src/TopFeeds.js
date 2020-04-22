@@ -53,7 +53,10 @@ function TopFeeds({ feedsStore }) {
 
   let list = [];
   const getListing = async (feed) => {
-    await Feed.load("http://localhost:5000/" + feed, function (err, rss) {
+    await Feed.load("https://cors-anywhere.herokuapp.com/" + feed, function (
+      err,
+      rss
+    ) {
       if (err) {
         console.log("error" + feed);
       } else {
