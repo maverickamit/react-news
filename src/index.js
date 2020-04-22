@@ -12,7 +12,6 @@ const feedsStore = new FeedsStore();
 
 // Initialize the desired locales.
 JavascriptTimeAgo.locale(en);
-console.log = function () {};
 
 ReactDOM.render(
   <App feedsStore={feedsStore} />,
