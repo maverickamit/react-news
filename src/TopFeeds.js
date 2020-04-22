@@ -139,7 +139,7 @@ function TopFeeds({ feedsStore }) {
                       striptags(li.description).substring(0, 150) + "..."
                     )}
                   </Card.Text>
-                  <Card.Text>
+                  <Card.Text className="time-ago">
                     <span>
                       <ReactTimeAgo date={new Date(li.pubDate)} />
                       <span>{`  from ${li.sourceName}`}</span>
