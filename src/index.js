@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import JavascriptTimeAgo from 'javascript-time-ago';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en';
 import './index.css';
 import App from './App';
@@ -16,7 +16,7 @@ JavascriptTimeAgo.locale(en);
 // console.log = function () {};
 
 ReactDOM.render(
-	<Router basename="/react-rss">
+	<Router basename="/">
 		<App feedsStore={feedsStore} />
 	</Router>,
 	document.getElementById('root')
