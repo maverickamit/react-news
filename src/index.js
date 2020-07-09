@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import JavascriptTimeAgo from "javascript-time-ago";
+import { BrowserRouter as Router } from "react-router-dom";
 import en from "javascript-time-ago/locale/en";
 import "./index.css";
 import App from "./App";
@@ -9,13 +10,15 @@ import { FeedsStore } from "./store";
 const feedsStore = new FeedsStore();
 
 // The desired locales.
-
 // Initialize the desired locales.
 JavascriptTimeAgo.locale(en);
-console.log = function () {};
+
+// console.log = function () {};
 
 ReactDOM.render(
-  <App feedsStore={feedsStore} />,
+  <Router basename="/news">
+    <App feedsStore={feedsStore} />
+  </Router>,
   document.getElementById("root")
 );
 

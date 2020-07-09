@@ -1,0 +1,65 @@
+const defaultFeeds = [
+  { name: "BBC News", url: "http://feeds.bbci.co.uk/news/rss.xml" },
+  { name: "The Intercept", url: "https://theintercept.com/feed/?lang=en" },
+  { name: "Al Jazeera", url: "http://www.aljazeera.com/xml/rss/all.xml" },
+  { name: "UPI News", url: "http://rss.upi.com/news/top_news.rss" },
+  { name: "Newsday", url: "http://www.newsday.com/cmlink/1.1284874" },
+  { name: "The IB Times", url: "http://www.ibtimes.com/rss" },
+  {
+    name: "NY Times",
+    url: "http://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+  },
+  {
+    name: "Fox News",
+    url: "http://feeds.foxnews.com/foxnews/politics?format=xml",
+  },
+  {
+    name: "Reuters",
+    url: "http://feeds.reuters.com/reuters/topNews?format=xml",
+  },
+  {
+    name: "Zero Hedge",
+    url: "http://feeds.feedburner.com/zerohedge/feed?format=xml",
+  },
+  { name: "NPR", url: "http://www.npr.org/rss/rss.php?id=1001" },
+  { name: "TMZ", url: "http://www.tmz.com/category/politix/rss.xml" },
+  { name: "NY POST", url: "http://nypost.com/news/feed/" },
+  { name: "The Guardian World", url: "https://www.theguardian.com/world/rss" },
+  { name: "The Guardian US", url: "https://www.theguardian.com/us-news/rss" },
+  {
+    name: "The Daily Mail US",
+    url: "https://www.dailymail.co.uk/ushome/index.rss",
+  },
+  {
+    name: "The Daily Mail World",
+    url: "https://www.dailymail.co.uk/news/worldnews/index.rss",
+  },
+  { name: "The Sun", url: "https://www.thesun.co.uk/news/worldnews/feed/" },
+  { name: "The Hill", url: "https://thehill.com/rss/syndicator/19109" },
+  { name: "PBS", url: "https://www.pbs.org/newshour/feeds/rss/headlines" },
+  {
+    name: "Washington Examiner",
+    url: "https://www.washingtonexaminer.com/tag/news.rss",
+  },
+  { name: "CBS News", url: "https://www.cbsnews.com/latest/rss/main" },
+  { name: "Politico", url: "https://www.politico.com/rss/politicopicks.xml" },
+  {
+    name: "CNBC",
+    url: "https://www.cnbc.com/id/100727362/device/rss/rss.html",
+  },
+  { name: "LA Times", url: "https://www.latimes.com/world-nation.rss" },
+  { name: "Independent", url: "http://www.independent.co.uk/news/world/rss" },
+  { name: "News Week", url: "http://www.newsweek.com/rss" },
+  { name: "NBC News", url: "http://feeds.nbcnews.com/nbcnews/public/news" },
+  { name: "SCMP", url: "https://www.scmp.com/rss/91/feed" },
+  { name: "Sky News", url: "http://feeds.skynews.com/feeds/rss/world.xml" },
+  { name: "CBC", url: "https://www.cbc.ca/cmlink/rss-world" },
+  { name: "Global News", url: "https://globalnews.ca/category/world/feed/" },
+  {
+    name: "Chicago Tribune",
+    url: "https://www.chicagotribune.com/arcio/rss/category/nation-world",
+  },
+  { name: "Daily Caller", url: "http://dailycaller.com/feed/" },
+  { name: "Reason", url: "https://reason.com/feed/" },
+];
+export default defaultFeeds;
