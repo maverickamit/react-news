@@ -8,27 +8,25 @@ import { autorun } from 'mobx';
 
 function TopBar({ feedsStore }) {
 	return (
-		<Navbar bg={feedsStore.darkmode !== true ? 'primary' : 'secondary'} expand="lg" variant="dark">
+		<Navbar bg={feedsStore.darkmode != true ? 'primary' : 'secondary'} expand="lg" variant="dark">
 			<Navbar.Brand>
 				<Link style={{ color: 'white', textDecoration: 'none' }} to="/">
-					Home
+					News
 				</Link>
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="mr-auto">
-					<Nav.Link
-						href="https://amit-ghosh.com/portfolio/"
-						style={{ color: 'white', textDecoration: 'none' }}
-					>
-						Portfolio{' '}
+					<Nav.Link href="https://amit-ghosh.com/" style={{ color: 'white', textDecoration: 'none' }}>
+						Portfolio
 					</Nav.Link>
+
 					<Link
 						style={{ color: 'white', textDecoration: 'none' }}
 						className="nav-item nav-link active"
 						to="/settings"
 					>
-						Settings{' '}
+						Settings
 					</Link>
 				</Nav>
 			</Navbar.Collapse>

@@ -1,8 +1,4 @@
-import {
-  observable,
-  action,
-  decorate
-} from "mobx";
+import { observable, action, decorate } from "mobx";
 
 class FeedsStore {
   feeds = ["Hello"];
@@ -31,6 +27,4 @@ FeedsStore = decorate(FeedsStore, {
   setSelectedFeed: action,
 });
 
-export {
-  FeedsStore
-};
+export { FeedsStore };
