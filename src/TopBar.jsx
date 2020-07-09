@@ -17,7 +17,10 @@ function TopBar({ feedsStore }) {
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="mr-auto">
-					<Nav.Link href="https:amit-ghosh.com/portfolio/" style={{ color: 'white', textDecoration: 'none' }}>
+					<Nav.Link
+						href="https://amit-ghosh.com/portfolio/"
+						style={{ color: 'white', textDecoration: 'none' }}
+					>
 						Portfolio{' '}
 					</Nav.Link>
 					<Link
