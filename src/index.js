@@ -16,7 +16,7 @@ JavascriptTimeAgo.locale(en);
 // console.log = function () {};
 
 ReactDOM.render(
-	<Router basename="/">
+	<Router basename="/react-rss/">
 		<App feedsStore={feedsStore} />
 	</Router>,
 	document.getElementById('root')
