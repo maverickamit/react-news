@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/amit-ghosh.com/react-news/static/css/main.06576a2c.chunk.css",
-    "main.js": "/amit-ghosh.com/react-news/static/js/main.b976ae06.chunk.js",
-    "main.js.map": "/amit-ghosh.com/react-news/static/js/main.b976ae06.chunk.js.map",
-    "runtime-main.js": "/amit-ghosh.com/react-news/static/js/runtime-main.a6cc1569.js",
-    "runtime-main.js.map": "/amit-ghosh.com/react-news/static/js/runtime-main.a6cc1569.js.map",
-    "static/js/2.f158ec9b.chunk.js": "/amit-ghosh.com/react-news/static/js/2.f158ec9b.chunk.js",
-    "static/js/2.f158ec9b.chunk.js.map": "/amit-ghosh.com/react-news/static/js/2.f158ec9b.chunk.js.map",
-    "index.html": "/amit-ghosh.com/react-news/index.html",
-    "precache-manifest.4820d4354f11424f8e787837f111ed70.js": "/amit-ghosh.com/react-news/precache-manifest.4820d4354f11424f8e787837f111ed70.js",
-    "service-worker.js": "/amit-ghosh.com/react-news/service-worker.js",
-    "static/css/main.06576a2c.chunk.css.map": "/amit-ghosh.com/react-news/static/css/main.06576a2c.chunk.css.map",
-    "static/js/2.f158ec9b.chunk.js.LICENSE.txt": "/amit-ghosh.com/react-news/static/js/2.f158ec9b.chunk.js.LICENSE.txt"
+    "main.css": "/react-news/static/css/main.06576a2c.chunk.css",
+    "main.js": "/react-news/static/js/main.68196c8b.chunk.js",
+    "main.js.map": "/react-news/static/js/main.68196c8b.chunk.js.map",
+    "runtime-main.js": "/react-news/static/js/runtime-main.c3c1ab23.js",
+    "runtime-main.js.map": "/react-news/static/js/runtime-main.c3c1ab23.js.map",
+    "static/js/2.bbe72514.chunk.js": "/react-news/static/js/2.bbe72514.chunk.js",
+    "static/js/2.bbe72514.chunk.js.map": "/react-news/static/js/2.bbe72514.chunk.js.map",
+    "index.html": "/react-news/index.html",
+    "precache-manifest.2a38eade46c9f3be31861ee96ce12431.js": "/react-news/precache-manifest.2a38eade46c9f3be31861ee96ce12431.js",
+    "service-worker.js": "/react-news/service-worker.js",
+    "static/css/main.06576a2c.chunk.css.map": "/react-news/static/css/main.06576a2c.chunk.css.map",
+    "static/js/2.bbe72514.chunk.js.LICENSE.txt": "/react-news/static/js/2.bbe72514.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a6cc1569.js",
-    "static/js/2.f158ec9b.chunk.js",
+    "static/js/runtime-main.c3c1ab23.js",
+    "static/js/2.bbe72514.chunk.js",
     "static/css/main.06576a2c.chunk.css",
-    "static/js/main.b976ae06.chunk.js"
+    "static/js/main.68196c8b.chunk.js"
   ]
 }
